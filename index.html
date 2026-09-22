@@ -1,22 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PULSE — Connect. Create. Discover.</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Connect. Create. Discover.</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#050507;
+    color:white;
+    min-height:100vh;
+}
+
+.app{
+    max-width:600px;
+    margin:auto;
+    padding-bottom:80px;
+}
+
+/* HEADER */
+header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:rgba(5,5,7,.95);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #24242b;
+    padding:15px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#ff5c35;
+}
+
+.header-icons{
+    display:flex;
+    gap:10px;
+}
+
+.icon{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#17171d;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+}
+
+/* STORIES */
+.stories{
+    padding:18px 12px;
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    border-bottom:1px solid #202027;
+}
+
+.story{
+    min-width:65px;
+    text-align:center;
+    font-size:11px;
+}
+
+.story-img{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    margin:auto auto 6px;
+    padding:3px;
+    background:linear-gradient(135deg,#ff5c35,#ffb347,#9b59ff);
+}
+
+.story-img div{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:#222;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+}
+
+/* CREATE */
+.create{
+    margin:15px;
+    padding:15px;
+    background:#111116;
+    border:1px solid #292930;
+    border-radius:18px;
+}
+
+.create-top{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ff5c35,#8e44ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.input{
+    flex:1;
+    background:#1b1b21;
+    border-radius:25px;
+    padding:13px 16px;
+    color:#aaa;
+}
+
+.create-buttons{
+    display:flex;
+    justify-content:space-around;
+    margin-top:15px;
+    color:#aaa;
+    font-size:14px;
+}
+
+/* PULSE NOW */
+.pulse-now{
+    margin:15px;
+    padding:16px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#171116,#11131b);
+    border:1px solid #39242a;
+}
+
+.pulse-title{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+}
+
+.pulse-title strong{
+    color:#ff6945;
+}
+
+.topic{
+    padding:12px 0;
+    border-top:1px solid #28282e;
+}
+
+.topic span{
+    color:#777;
+    font-size:12px;
+}
+
+/* POST */
+.post{
+    margin:15px;
+    background:#111116;
+    border:1px solid #292930;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.post-header{
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.post-user{
+    flex:1;
+}
+
+.post-user b{
+    display:block;
+}
+
+.verified{
+    color:#4da6ff;
+}
+
+.post-user small{
+    color:#777;
+}
+
+.follow{
+    color:#ff6945;
+    font-size:13px;
+}
+
+.post-content{
+    padding:0 15px 15px;
+    line-height:1.5;
+}
+
+.post-image{
+    width:100%;
+    height:280px;
+    background:linear-gradient(135deg,#201b32,#462a29,#111);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:65px;
+}
+
+.post-actions{
+    padding:13px 15px;
+    display:flex;
+    gap:22px;
+    border-top:1px solid #27272d;
+}
+
+.action{
+    cursor:pointer;
+    color:#aaa;
+}
+
+.action:hover{
+    color:white;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:600px;
+    height:65px;
+    background:rgba(10,10,13,.96);
+    border-top:1px solid #292930;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:20;
+}
+
+.nav-item{
+    color:#888;
+    text-align:center;
+    font-size:11px;
+}
+
+.nav-item div{
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+.nav-item.active{
+    color:#ff6945;
+}
+
+/* SEARCH */
+.search-box{
+    margin:15px;
+    padding:13px 16px;
+    background:#141419;
+    border:1px solid #292930;
+    border-radius:25px;
+    color:#888;
+}
+
+/* RESPONSIVE */
+@media(min-width:601px){
+    body{
+        background:#020203;
+    }
+
+    .app{
+        border-left:1px solid #202027;
+        border-right:1px solid #202027;
+        min-height:100vh;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>⚡ PULSE</h1>
-    <p>Connect. Create. Discover.</p>
+<div class="app">
 
-    <hr>
+<header>
+    <div class="logo">PUL<span>S</span>E</div>
 
-    <h2>Welcome to PULSE</h2>
-    <p>Your new social world is coming soon.</p>
+    <div class="header-icons">
+        <div class="icon">⌕</div>
+        <div class="icon">🔔</div>
+    </div>
+</header>
 
-    <button>Explore PULSE</button>
+<!-- STORIES -->
+<div class="stories">
+
+    <div class="story">
+        <div class="story-img"><div>+</div></div>
+        Your Story
+    </div>
+
+    <div class="story">
+        <div class="story-img"><div>🎬</div></div>
+        Cinema
+    </div>
+
+    <div class="story">
+        <div class="story-img"><div>🏏</div></div>
+        Sports
+    </div>
+
+    <div class="story">
+        <div class="story-img"><div>🤖</div></div>
+        AI Tech
+    </div>
+
+    <div class="story">
+        <div class="story-img"><div>🎵</div></div>
+        Music
+    </div>
+
+    <div class="story">
+        <div class="story-img"><div>🔥</div></div>
+        Trending
+    </div>
+
+</div>
+
+<!-- SEARCH -->
+<div class="search-box">
+    🔎 Search people, creators, topics...
+</div>
+
+<!-- CREATE POST -->
+<div class="create">
+
+    <div class="create-top">
+        <div class="avatar">RC</div>
+
+        <div class="input">
+            What's happening?
+        </div>
+    </div>
+
+    <div class="create-buttons">
+        <span>📷 Photo</span>
+        <span>🎥 Video</span>
+        <span>🎤 Voice</span>
+        <span>📊 Poll</span>
+    </div>
+
+</div>
+
+<!-- PULSE NOW -->
+<div class="pulse-now">
+
+    <div class="pulse-title">
+        <strong>🔥 PULSE NOW</strong>
+        <span>View all →</span>
+    </div>
+
+    <div class="topic">
+        🤖 Artificial Intelligence
+        <br>
+        <span>24.8K people discussing</span>
+    </div>
+
+    <div class="topic">
+        🎬 Cinema
+        <br>
+        <span>18.2K people discussing</span>
+    </div>
+
+    <div class="topic">
+        🏏 Cricket
+        <br>
+        <span>15.7K people discussing</span>
+    </div>
+
+</div>
+
+<!-- POST 1 -->
+<div class="post">
+
+    <div class="post-header">
+
+        <div class="avatar">🎬</div>
+
+        <div class="post-user">
+            <b>Official Cinema</b>
+            <small>@cinema • 2h</small>
+        </div>
+
+        <div class="follow">Follow</div>
+
+    </div>
+
+    <div class="post-content">
+        Something exciting is coming soon. 🚀
+        <br><br>
+        Stay connected with PULSE for the latest updates.
+    </div>
+
+    <div class="post-image">
+        🎬
+    </div>
+
+    <div class="post-actions">
+        <span class="action" onclick="likePost(this)">♡ 2.4K</span>
+        <span class="action">💬 486</span>
+        <span class="action">↗ Share</span>
+        <span class="action">🔖</span>
+    </div>
+
+</div>
+
+<!-- POST 2 -->
+<div class="post">
+
+    <div class="post-header">
+
+        <div class="avatar">AI</div>
+
+        <div class="post-user">
+            <b>Future AI <span class="verified">✓</span></b>
+            <small>@futureai • 4h</small>
+        </div>
+
+        <div class="follow">Follow</div>
+
+    </div>
+
+    <div class="post-content">
+        AI is changing how we learn, create and work. 🤖
+        <br><br>
+        What AI feature would you like to see next?
+    </div>
+
+    <div class="post-actions">
+        <span class="action" onclick="likePost(this)">♡ 1.8K</span>
+        <span class="action">💬 213</span>
+        <span class="action">↗ Share</span>
+        <span class="action">🔖</span>
+    </div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+
+    <div class="nav-item active">
+        <div>⌂</div>
+        Home
+    </div>
+
+    <div class="nav-item">
+        <div>🔥</div>
+        Pulse
+    </div>
+
+    <div class="nav-item">
+        <div>＋</div>
+        Create
+    </div>
+
+    <div class="nav-item">
+        <div>🔎</div>
+        Discover
+    </div>
+
+    <div class="nav-item">
+        <div>👤</div>
+        Profile
+    </div>
+
+</div>
+
+<script>
+
+function likePost(element){
+
+    if(element.innerHTML.includes("♡")){
+        element.innerHTML="♥ Liked";
+        element.style.color="#ff5c35";
+    }else{
+        element.innerHTML="♡ Like";
+        element.style.color="";
+    }
+
+}
+
+</script>
 
 </body>
 </html>
