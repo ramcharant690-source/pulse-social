@@ -1,4 +1,345 @@
-<!DOCTYPE html>
+<script>
+
+const app = document.querySelector(".app");
+const originalHome = app.innerHTML;
+
+function home(){
+    app.innerHTML = originalHome;
+    setActive("Home");
+    addHomeEvents();
+}
+
+function setActive(name){
+    document.querySelectorAll(".nav-item").forEach(item=>{
+        item.classList.remove("active");
+
+        if(item.innerText.includes(name)){
+            item.classList.add("active");
+        }
+    });
+}
+
+function addHomeEvents(){
+
+    document.querySelectorAll(".action").forEach(button=>{
+        button.onclick = function(){
+
+            if(this.innerHTML.includes("♡")){
+                this.innerHTML = "♥ Liked";
+                this.style.color = "#ff5c35";
+            }else{
+                this.innerHTML = "♡ Like";
+                this.style.color = "";
+            }
+
+        };
+    });
+
+}
+
+function pulsePage(){
+
+    setActive("Pulse");
+
+    app.innerHTML = `
+    <header>
+        <div class="logo">PUL<span>S</span>E</div>
+        <div class="header-icons">
+            <div class="icon">🔥</div>
+        </div>
+    </header>
+
+    <div style="padding:20px">
+
+        <h1 style="margin-bottom:8px">🔥 Pulse Now</h1>
+        <p style="color:#888;margin-bottom:25px">
+            Discover what people are talking about right now.
+        </p>
+
+        <div class="pulse-now">
+
+            <div class="topic">
+                🤖 Artificial Intelligence
+                <br>
+                <span>Trending topic</span>
+            </div>
+
+            <div class="topic">
+                🎬 Cinema
+                <br>
+                <span>Trending topic</span>
+            </div>
+
+            <div class="topic">
+                🏏 Cricket
+                <br>
+                <span>Trending topic</span>
+            </div>
+
+            <div class="topic">
+                🎵 Music
+                <br>
+                <span>Trending topic</span>
+            </div>
+
+            <div class="topic">
+                🎮 Gaming
+                <br>
+                <span>Trending topic</span>
+            </div>
+
+        </div>
+
+    </div>
+    `;
+}
+
+function createPage(){
+
+    setActive("Create");
+
+    app.innerHTML = `
+    <header>
+        <div class="logo">PUL<span>S</span>E</div>
+    </header>
+
+    <div style="padding:20px">
+
+        <h1>Create</h1>
+
+        <div class="create" style="margin:20px 0">
+
+            <div class="create-top">
+                <div class="avatar">RC</div>
+
+                <textarea
+                    id="postText"
+                    placeholder="What's happening?"
+                    style="
+                    flex:1;
+                    min-height:130px;
+                    background:#1b1b21;
+                    border:0;
+                    border-radius:18px;
+                    padding:15px;
+                    color:white;
+                    font-size:16px;
+                    resize:none;
+                    outline:none;
+                    "
+                ></textarea>
+
+            </div>
+
+            <div class="create-buttons">
+                <span>📷 Photo</span>
+                <span>🎥 Video</span>
+                <span>🎤 Voice</span>
+                <span>📊 Poll</span>
+            </div>
+
+            <button
+                onclick="publishPost()"
+                style="
+                width:100%;
+                margin-top:18px;
+                padding:14px;
+                border:0;
+                border-radius:25px;
+                background:#ff5c35;
+                color:white;
+                font-size:16px;
+                font-weight:bold;
+                "
+            >
+                Publish
+            </button>
+
+        </div>
+
+    </div>
+    `;
+}
+
+function publishPost(){
+
+    const text = document.getElementById("postText").value.trim();
+
+    if(!text){
+        alert("Please write something first.");
+        return;
+    }
+
+    alert("Post created successfully! 🚀");
+
+    home();
+}
+
+function discoverPage(){
+
+    setActive("Discover");
+
+    app.innerHTML = `
+    <header>
+        <div class="logo">PUL<span>S</span>E</div>
+    </header>
+
+    <div style="padding:20px">
+
+        <h1>🔎 Discover</h1>
+
+        <div class="search-box">
+            Search people, creators, celebrities, topics...
+        </div>
+
+        <h2 style="margin-top:30px">⭐ Popular</h2>
+
+        <div class="pulse-now">
+
+            <div class="topic">
+                🤖 AI Creators
+                <br>
+                <span>Discover technology creators</span>
+            </div>
+
+            <div class="topic">
+                🎬 Cinema Creators
+                <br>
+                <span>Movies, entertainment and news</span>
+            </div>
+
+            <div class="topic">
+                🏏 Sports Creators
+                <br>
+                <span>Sports discussions</span>
+            </div>
+
+            <div class="topic">
+                🎵 Music Creators
+                <br>
+                <span>Artists and musicians</span>
+            </div>
+
+        </div>
+
+    </div>
+    `;
+}
+
+function profilePage(){
+
+    setActive("Profile");
+
+    app.innerHTML = `
+    <header>
+        <div class="logo">PUL<span>S</span>E</div>
+    </header>
+
+    <div style="padding:25px;text-align:center">
+
+        <div class="avatar"
+             style="
+             width:90px;
+             height:90px;
+             margin:auto;
+             font-size:25px;
+             ">
+            RC
+        </div>
+
+        <h2 style="margin-top:15px">
+            Ram Charan
+        </h2>
+
+        <p style="color:#888">
+            @ramcharan
+        </p>
+
+        <p style="margin-top:15px">
+            Connect. Create. Discover. 🚀
+        </p>
+
+        <div style="
+        display:flex;
+        justify-content:space-around;
+        margin-top:30px;
+        padding:20px;
+        background:#111116;
+        border-radius:18px;
+        ">
+
+            <div>
+                <b>0</b>
+                <br>
+                <small>Posts</small>
+            </div>
+
+            <div>
+                <b>0</b>
+                <br>
+                <small>Followers</small>
+            </div>
+
+            <div>
+                <b>0</b>
+                <br>
+                <small>Following</small>
+            </div>
+
+        </div>
+
+        <button
+        style="
+        margin-top:25px;
+        padding:13px 35px;
+        border:1px solid #ff5c35;
+        background:transparent;
+        color:#ff5c35;
+        border-radius:25px;
+        ">
+        Edit Profile
+        </button>
+
+    </div>
+    `;
+}
+
+
+/* BOTTOM NAVIGATION */
+
+document.querySelectorAll(".nav-item").forEach(item=>{
+
+    item.addEventListener("click", function(){
+
+        const text = this.innerText;
+
+        if(text.includes("Home")){
+            home();
+        }
+
+        else if(text.includes("Pulse")){
+            pulsePage();
+        }
+
+        else if(text.includes("Create")){
+            createPage();
+        }
+
+        else if(text.includes("Discover")){
+            discoverPage();
+        }
+
+        else if(text.includes("Profile")){
+            profilePage();
+        }
+
+    });
+
+});
+
+addHomeEvents();
+
+</script> html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
